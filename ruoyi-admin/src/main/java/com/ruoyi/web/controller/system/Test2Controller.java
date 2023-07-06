@@ -19,18 +19,13 @@ public class Test2Controller extends BaseController {
     @Autowired
     private TestServiceImpl testService;
 
-    @GetMapping("/list")
-    public TableDataInfo getList() {
-        startPage();
-        return getDataTable(testService.list());
-    }
 
     @PostMapping("/add")
     public AjaxResult add(@RequestBody Test test) {
-        if (test.getName() != null && test.getAge() != null && test.getWeight() != null && test.getHeight() != null) {
-            return AjaxResult.success(testService.save(test));
+        if (test.getName() == null && test.getAge() == null && test.getWeight() == null && test.getHeight() == null) {
+            return AjaxResult.error("未填写信息，添加失败");
         }
-        return AjaxResult.error("未填写信息，添加失败");
+        return AjaxResult.success(testService.save(test));
     }
 
     @PostMapping("/delete")
@@ -41,6 +36,12 @@ public class Test2Controller extends BaseController {
     @PostMapping("/update")
     public AjaxResult update(@RequestBody Test test) {
         return AjaxResult.success(testService.updateById(test));
+    }
+
+    @GetMapping("/list")
+    public TableDataInfo getListByParams(Test test) {
+        startPage();
+        return getDataTable(testService.selectListByParams(test));
     }
 
 

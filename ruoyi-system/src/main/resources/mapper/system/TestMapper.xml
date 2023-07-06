@@ -5,15 +5,40 @@
 <mapper namespace="com.ruoyi.system.mapper.TestMapper">
 
     <resultMap id="BaseResultMap" type="Test">
-            <id property="id" column="id" jdbcType="INTEGER"/>
-            <result property="name" column="name" jdbcType="VARCHAR"/>
-            <result property="age" column="age" jdbcType="INTEGER"/>
-            <result property="height" column="height" jdbcType="DOUBLE"/>
-            <result property="weight" column="weight" jdbcType="VARCHAR"/>
+        <id property="id" column="id" jdbcType="INTEGER"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="age" column="age" jdbcType="INTEGER"/>
+        <result property="height" column="height" jdbcType="DOUBLE"/>
+        <result property="weight" column="weight" jdbcType="VARCHAR"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,name,age,
+        id
+        ,name,age,
         height,weight
     </sql>
+
+
+    <select id="selectListByParams" parameterType="Test" resultMap="BaseResultMap">
+        SELECT id, name, age, height, weight FROM Test
+        <where>
+            <if test="id != null and id > 0">
+                AND id = #{id}
+            </if>
+            <if test="name != null and name != ''">
+                AND name LIKE CONCAT('%', #{name}, '%')
+            </if>
+            <if test="age != null and age > 0">
+                AND age = #{age}
+            </if>
+            <if test="height != null and height > 0">
+                AND height = #{height}
+            </if>
+            <if test="weight != null and weight > 0">
+                AND weight = #{weight}
+            </if>
+        </where>
+
+    </select>
+
 </mapper>

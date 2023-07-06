@@ -5,7 +5,10 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ruoyi.system.domain.Test;
 import com.ruoyi.system.mapper.TestMapper;
 import com.ruoyi.system.service.TestService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
 * @author bianchengdong
@@ -15,6 +18,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class TestServiceImpl extends ServiceImpl<TestMapper, Test>
     implements TestService {
+
+    @Autowired
+    private TestMapper testMapper;
+    @Override
+    public List<Test> selectListByParams(Test test) {
+      return  testMapper.selectListByParams(test);
+    }
+
 
 }
 

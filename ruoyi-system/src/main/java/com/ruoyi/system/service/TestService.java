@@ -3,6 +3,8 @@ package com.ruoyi.system.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.ruoyi.system.domain.Test;
 
+import java.util.List;
+
 
 /**
 * @author bianchengdong
@@ -11,4 +13,6 @@ import com.ruoyi.system.domain.Test;
 */
 public interface TestService extends IService<Test> {
 
+
+    List<Test> selectListByParams(Test test);
 }
