@@ -10,17 +10,18 @@
         <result property="age" column="age" jdbcType="INTEGER"/>
         <result property="height" column="height" jdbcType="DOUBLE"/>
         <result property="weight" column="weight" jdbcType="VARCHAR"/>
+        <result property="createTime" column="createTime" jdbcType="TIMESTAMP"/>
     </resultMap>
 
     <sql id="Base_Column_List">
         id
         ,name,age,
-        height,weight
+        height,weight,createTime
     </sql>
 
 
     <select id="selectListByParams" parameterType="Test" resultMap="BaseResultMap">
-        SELECT id, name, age, height, weight FROM Test
+        SELECT id, name, age, height, weight,createTime FROM Test
         <where>
             <if test="id != null and id > 0">
                 AND id = #{id}
@@ -37,6 +38,13 @@
             <if test="weight != null and weight > 0">
                 AND weight = #{weight}
             </if>
+            <if test="startTime != null and startTime != ''"><!-- 开始时间检索 -->
+                AND createTime &gt;= #{startTime}
+            </if>
+            <if test="endTime != null and endTime != ''"><!-- 结束时间检索 -->
+                AND createTime &lt;= #{endTime}
+            </if>
+
         </where>
 
     </select>
